@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Detalle del Pedido</title>
+    <link rel="stylesheet" th:href="@{/css/estilos.css}">
+</head>
+<body>
+    <div class="container">
+        <h2>Detalle del Pedido</h2>
+
+        <div class="pedido-detalle">
+            <h3 th:text="${pedido.producto.nombre}"></h3>
+            <img th:src="${pedido.producto.imagenUrl}" alt="Imagen del producto" width="200">
+
+            <p><strong>Descripción:</strong> <span th:text="${pedido.producto.descripcion}"></span></p>
+            <p><strong>Categoría:</strong> <span th:text="${pedido.producto.categoria}"></span></p>
+            <p><strong>Medidas:</strong> <span th:text="${pedido.producto.medidas}"></span></p>
+
+            <hr>
+
+            <p><strong>Fecha de Pedido:</strong> <span th:text="${pedido.fechaPedido}"></span></p>
+            <p><strong>Fecha de Entrega:</strong> <span th:text="${pedido.fechaEntrega}"></span></p>
+            <p><strong>Estado:</strong> <span th:text="${pedido.estado}"></span></p>
+            <p><strong>Forma de Pago:</strong> <span th:text="${pedido.formaPago}"></span></p>
+            <p><strong>Total:</strong> $<span th:text="${pedido.producto.precio}"></span></p>
+
+            <a th:href="@{/pedido/mis-pedidos}">← Volver a Mis Pedidos</a>
+        </div>
+    </div>
+</body>
+</html>

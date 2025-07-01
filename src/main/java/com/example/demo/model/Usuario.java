@@ -1,5 +1,5 @@
 package com.example.demo.model;
-
+import com.example.demo.model.Rol;
 import jakarta.persistence.*;
 
 @Entity
@@ -17,8 +17,8 @@ public class Usuario {
 
     @Column(nullable = false)
     private String contraseña;
-
-    private String rol;
+    @Enumerated(EnumType.STRING)
+    private Rol rol;
 
     private String telefono;
 
@@ -37,8 +37,8 @@ public class Usuario {
     public String getContraseña() { return contraseña; }
     public void setContraseña(String contraseña) { this.contraseña = contraseña; }
 
-    public String getRol() { return rol; }
-    public void setRol(String rol) { this.rol = rol; }
+    public Rol getRol() { return rol; }
+    public void setRol(Rol rol) { this.rol = rol; }
 
     public String getTelefono() { return telefono; }
     public void setTelefono(String telefono) { this.telefono = telefono; }

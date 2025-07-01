@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Formulario de Pedido</title>
+    <link rel="stylesheet" th:href="@{/css/estilos.css}">
+</head>
+<body>
+    <div class="container">
+        <h2>Realizar Pedido</h2>
+
+        <div class="producto-info">
+            <img th:src="${producto.imagenUrl}" alt="Imagen del producto" width="200">
+            <h3 th:text="${producto.nombre}"></h3>
+            <p th:text="${producto.descripcion}"></p>
+            <p><strong>Precio:</strong> $<span th:text="${producto.precio}"></span></p>
+            <p th:if="${producto.medidas}"><strong>Medidas:</strong> <span th:text="${producto.medidas}"></span></p>
+        </div>
+
+        <form th:action="@{/pedido/guardar}" th:object="${pedido}" method="post">
+            <!-- Campo oculto con el producto ID -->
+            <input type="hidden" th:field="*{producto.id}"/>
+
+            <label for="fechaEntrega">Fecha de Entrega:</label>
+            <input type="date" id="fechaEntrega" th:field="*{fechaEntrega}" required>
+
+            <label for="comentarios">Comentarios o personalización:</label>
+            <textarea id="comentarios" th:field="*{comentarios}" rows="4"></textarea>
+
+            <button type="submit">Confirmar Pedido</button>
+        </form>
+
+        <a th:href="@{/catalogo}">← Volver al Catálogo</a>
+    </div>
+</body>
+</html>

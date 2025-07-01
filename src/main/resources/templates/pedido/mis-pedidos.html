@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Mis Pedidos</title>
+    <link rel="stylesheet" th:href="@{/css/estilos.css}">
+</head>
+<body>
+    <div class="container">
+        <div th:if="${msg == 'cancelado'}" style="color: green; text-align: center; margin-bottom: 10px;">
+    ✅ El pedido fue cancelado correctamente.
+</div>
+
+        <h2>Mis Pedidos</h2>
+
+        <div th:if="${#lists.isEmpty(pedidos)}">
+            <p>No tenés pedidos registrados.</p>
+            <a th:href="@{/catalogo}">← Volver al Catálogo</a>
+        </div>
+
+        <div th:each="pedido : ${pedidos}" class="pedido-card">
+            <h3 th:text="${pedido.producto.nombre}"></h3>
+            <img th:src="${pedido.producto.imagenUrl}" alt="Imagen" width="150">
+            <p><strong>Fecha de Entrega:</strong> <span th:text="${pedido.fechaEntrega}"></span></p>
+            <p><strong>Estado:</strong> <span th:text="${pedido.estado}"></span></p>
+            <p><strong>Total:</strong> $<span th:text="${pedido.producto.precio}"></span></p>
+            <th:block th:if="${pedido.estado == 'PENDIENTE'}">
+                <a th:href="@{'/pedido/cancelar/' + ${pedido.id}}" class="boton-cancelar">Cancelar</a>
+            </th:block>
+
+            <a th:href="@{'/pedido/detalle/' + ${pedido.id}}">Ver Detalle</a>
+        </div>
+    </div>
+</body>
+</html>

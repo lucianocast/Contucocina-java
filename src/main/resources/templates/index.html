@@ -1,30 +1,54 @@
-<!-- index.html - Página de inicio de Contucocina -->
 <!DOCTYPE html>
-<html lang="es">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Inicio - Contucocina</title>
-    <link rel="stylesheet" href="/css/estilos.css">
+    <title>ContuCocina - Inicio</title>
+    <link rel="stylesheet" th:href="@{/css/estilos.css}">
 </head>
 <body>
     <header>
-        <h1>Bienvenida a Contucocina</h1>
+        <h1>ContuCocina</h1>
         <nav>
-            <a href="/">Inicio</a> |
-            <a href="/catalogo">Catálogo</a> |
-            <a href="/login">Iniciar Sesión</a> |
-            <a href="/registro">Registrarse</a>
+            <a th:href="@{/}">Inicio</a>
+            <a th:href="@{/catalogo}">Catálogo</a>
+            <a th:href="@{/registro}">Registrate</a>
+            <a th:href="@{/login}">Login</a>
         </nav>
     </header>
 
-    <main>
-        <h2>¿Qué estás buscando hoy?</h2>
-        <p>Explorá nuestros productos personalizados, tortas artesanales y delicias únicas.</p>
-        <img src="/img/portada.jpg" alt="Imagen destacada" style="max-width: 400px;">
+    <main class="principal">
+        <section class="destacado">
+            <h2>Productos Destacados</h2>
+            <div class="destacados">
+                <div th:each="producto : ${destacados}" class="producto">
+                    <img th:src="${producto.imagenUrl}" alt="Imagen del producto" style="max-width:100%; border-radius: 8px;">
+                    <h3 th:text="${producto.nombre}">Nombre</h3>
+                    <p th:text="${producto.descripcion}">Descripción</p>
+                    <p><strong>Precio:</strong> $<span th:text="${producto.precio}">0.00</span></p>
+                </div>
+            </div>
+
+    </div>
+</div>
+
+            <p>El producto estrella de la semana.</p>
+        </section>
+
+        <section class="fila-secundaria">
+            <div class="oferta">
+                <h3>Ofertas</h3>
+                <p>Promociones especiales.</p>
+            </div>
+            <div class="popular">
+                <h3>Populares</h3>
+                <p>Lo que más eligen nuestros clientes.</p>
+            </div>
+        </section>
     </main>
 
     <footer>
-        <p>&copy; 2025 Contucocina - Hecho con ♥ en Misiones</p>
+        <a href="#">Políticas de privacidad</a> |
+        <a href="#">Sobre ContuCocina</a>
     </footer>
 </body>
 </html>

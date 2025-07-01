@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Gestión de Pedidos - ContuCocina</title>
+    <link rel="stylesheet" th:href="@{/css/estilos.css}">
+</head>
+<body>
+    <div class="contenedor-admin-pedidos">
+        <h2>Pedidos Recibidos</h2>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Cliente</th>
+                    <th>Fecha</th>
+                    <th>Estado</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="pedido : ${pedidos}">
+                    <td th:text="${pedido.id}">1</td>
+                    <td th:text="${pedido.cliente.nombre}">Juan Pérez</td>
+                    <td th:text="${pedido.fecha}">2025-07-01</td>
+                    <td th:text="${pedido.estado}">PENDIENTE</td>
+                    <td>
+                        <!-- acciones como cambiar estado, eliminar, etc. -->
+                        <a th:href="@{'/pedido/eliminar/' + ${pedido.id}}">Eliminar</a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+        <a th:href="@{/}">Volver al inicio</a>
+    </div>
+</body>
+</html>

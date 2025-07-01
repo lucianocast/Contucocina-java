@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Catálogo - ContuCocina</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #fff8f0;
+            color: #333;
+            padding: 20px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #d26a6a;
+        }
+
+        .filtros {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .filtros a {
+            display: inline-block;
+            margin: 5px;
+            padding: 8px 16px;
+            text-decoration: none;
+            border-radius: 20px;
+            background-color: #d26a6a;
+            color: #fff;
+            font-size: 14px;
+        }
+
+        .filtros a:hover,
+        .filtros a.active {
+            background-color: #b84c4c;
+        }
+
+        .catalogo {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        .producto {
+            background-color: #fff;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            padding: 15px;
+            width: 250px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+
+        .producto img {
+            max-width: 100%;
+            border-radius: 8px;
+            margin-bottom: 10px;
+        }
+
+        .producto h2 {
+            font-size: 18px;
+            color: #d26a6a;
+            margin-bottom: 5px;
+        }
+
+        .producto p {
+            font-size: 14px;
+            margin: 2px 0;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Catálogo de Productos</h1>
+
+    <!-- FILTRO DE CATEGORÍAS -->
+    <div class="filtros">
+        <a th:href="@{/catalogo}" th:classappend="${#strings.isEmpty(param.categoria)} ? 'active' : ''">Todos</a>
+        <a th:each="cat : ${categorias}"
+           th:href="@{/catalogo(categoria=${cat})}"
+           th:text="${cat}"
+           th:classappend="${param.categoria == cat} ? 'active' : ''">
+        </a>
+    </div>
+
+    <!-- LISTA DE PRODUCTOS -->
+    <div class="catalogo">
+        <div class="producto" th:each="producto : ${productos}">
+    <img th:src="${producto.imagenUrl}" alt="Imagen del producto">
+    <h2 th:text="${producto.nombre}">Nombre</h2>
+    <p th:text="${producto.descripcion}">Descripción</p>
+    <p><strong>Precio:</strong> $<span th:text="${producto.precio}">0.00</span></p>
+    <p th:text="'Medidas: ' + ${producto.medidas}">Medidas</p>
+
+    <div th:if="${usuario != null}">
+        <form th:action="@{/pedido/nuevo}" method="get">
+            <input type="hidden" name="productoId" th:value="${producto.id}" />
+            <button type="submit">Realizar Pedido</button>
+        </form>
+    </div>
+</div>
+    </div>
+
+    <!-- MENSAJE SI NO HAY PRODUCTOS -->
+    <div th:if="${#lists.isEmpty(productos)}" style="text-align: center; margin-top: 20px;">
+        <p>No hay productos disponibles en esta categoría.</p>
+    </div>
+    <div th:if="${usuario == null}" style="text-align: center; margin-top: 20px;">
+        <p>Para realizar un pedido, <a th:href="@{/login}">inicia sesión</a> o <a th:href="@{/registro}">regístrate</a>.</p>
+    </div>
+    
+
+</body>
+</html>

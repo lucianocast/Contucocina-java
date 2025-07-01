@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Realizar Pedido - ContuCocina</title>
+    <link rel="stylesheet" th:href="@{/css/estilos.css}">
+</head>
+<body>
+    <div class="contenedor-pedido">
+        <h2>Realizar Pedido</h2>
+
+        <form th:action="@{/api/pedidos}" method="post" th:object="${pedido}">
+
+            <label for="fecha">Fecha de entrega:</label>
+            <input type="date" id="fecha" name="fecha" th:field="*{fecha}" required>
+
+            <label for="estado">Estado:</label>
+            <input type="text" id="estado" name="estado" th:field="*{estado}" value="PENDIENTE" readonly>
+
+            <h3>Seleccioná productos:</h3>
+            <div class="producto-linea" th:each="producto : ${productos}">
+                <input type="checkbox" name="productoIds" th:value="${producto.id}" />
+                <span th:text="${producto.nombre}">Nombre producto</span> - 
+                <span th:text="'$' + ${producto.precio}">Precio</span>
+            </div>
+
+            <button type="submit">Confirmar Pedido</button>
+        </form>
+    </div>
+</body>
+</html>

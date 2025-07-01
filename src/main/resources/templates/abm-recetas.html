@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Gestión de Recetas - ContuCocina</title>
+    <link rel="stylesheet" th:href="@{/css/estilos.css}">
+</head>
+<body>
+    <div class="contenedor-abm-recetas">
+        <h2>Gestión de Recetas</h2>
+
+        <form th:action="@{/api/recetas}" method="post" th:object="${receta}">
+            <input type="hidden" th:field="*{id}" />
+
+            <label for="nombre">Nombre:</label>
+            <input type="text" id="nombre" th:field="*{nombre}" required />
+
+            <label for="descripcion">Descripción:</label>
+            <textarea id="descripcion" th:field="*{descripcion}" required></textarea>
+
+            <button type="submit">Guardar receta</button>
+        </form>
+
+        <h3>Recetas registradas</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>Nombre</th>
+                    <th>Descripción</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="r : ${recetas}">
+                    <td th:text="${r.nombre}">Nombre receta</td>
+                    <td th:text="${r.descripcion}">Descripción</td>
+                    <td>
+                        <a th:href="@{'/admin/recetas/editar/' + ${r.id}}">Editar</a>
+                        <a th:href="@{'/admin/recetas/eliminar/' + ${r.id}}">Eliminar</a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+        <a th:href="@{/}">Volver al inicio</a>
+    </div>
+</body>
+</html>
